@@ -97,3 +97,8 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Ignore these folders
+/[Aa]ssets/Adaptive Performance/
+/[Aa]ssets/Adaptive Performance.meta
+/[Aa]ssets/TextMesh Pro/
