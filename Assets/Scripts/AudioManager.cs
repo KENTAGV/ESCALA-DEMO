@@ -4,32 +4,41 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    public AudioSource sfxSource;
+    [Header("Audio Source")]
+    public AudioSource audioSource;
 
-    public AudioClip coin;
+    [Header("Clips")]
     public AudioClip hurt;
+    public AudioClip coin;
     public AudioClip step;
 
     void Awake()
     {
+        // Singleton
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
+        {
             Destroy(gameObject);
-    }
-
-    public void PlayCoin()
-    {
-        sfxSource.PlayOneShot(coin);
+        }
     }
 
     public void PlayHurt()
     {
-        sfxSource.PlayOneShot(hurt);
+        audioSource.PlayOneShot(hurt);
+    }
+
+    public void PlayCoin()
+    {
+        audioSource.PlayOneShot(coin);
     }
 
     public void PlayStep()
     {
-        sfxSource.PlayOneShot(step);
+        audioSource.PlayOneShot(step);
     }
 }
+

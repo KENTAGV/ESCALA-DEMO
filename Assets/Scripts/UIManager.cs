@@ -1,47 +1,75 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Texts")]
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI sprintText;
 
+    [Header("Buttons")]
     public Button damageButton;
     public Button healButton;
     public Button spaceButton;
 
-    public ParticleSystem particles;
+    // VALORES DEL JUEGO
+    private int health = 100;
+    private int score = 1000;
+    private int speed = 0;
+    private int sprint = 0;
 
-    public void UpdateHealth(int value)
+    void Start()
     {
-        healthText.text = "Health = " + value;
+        UpdateTexts();
+
+        // Suscribirse a eventos
+        GameEvents.Instance.OnDamage.AddListener(OnDamage);
+        GameEvents.Instance.OnHeal.AddListener(OnHeal);
+        GameEvents.Instance.OnSpacePressed.AddListener(OnSpacePressed);
     }
 
-    public void UpdateScore(int value)
+    void OnDamage()
     {
-        scoreText.text = "Score = " + value;
+        health -= 10;
+        score -= 100;
+
+        damageButton.image.color = Color.red;
+
+        UpdateTexts();
     }
 
-    public void UpdateSpeed(int value)
+    void OnHeal()
     {
-        speedText.text = "Speed = " + value;
+        health += 10;
+        score += 100;
+
+        healButton.image.color = Color.green;
+
+        UpdateTexts();
     }
 
-    public void UpdateSprint(int value)
+    void OnSpacePressed()
     {
-        sprintText.text = "Sprint = " + value;
+        speed++;
+
+        if (speed % 5 == 0)
+        {
+            sprint++;
+        }
+
+        spaceButton.image.color = Color.yellow;
+
+        UpdateTexts();
     }
 
-    public void ChangeButtonColor(Button button, Color color)
+    void UpdateTexts()
     {
-        button.image.color = color;
-    }
-
-    public void PlayParticles()
-    {
-        particles.Play();
+        healthText.text = $"Health = {health}";
+        scoreText.text  = $"Score = {score}";
+        speedText.text  = $"Speed = {speed}";
+        sprintText.text = $"Sprint = {sprint}";
     }
 }

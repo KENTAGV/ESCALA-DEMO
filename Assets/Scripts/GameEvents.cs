@@ -1,16 +1,39 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameEvents : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static GameEvents Instance;
+
+    public UnityEvent OnDamage;
+    public UnityEvent OnHeal;
+    public UnityEvent OnSpacePressed;
+
+    void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // MÉTODOS QUE LLAMAN LOS BOTONES / INPUT
+    public void Damage()
     {
-        
+        OnDamage.Invoke();
+    }
+
+    public void Heal()
+    {
+        OnHeal.Invoke();
+    }
+
+    public void SpacePressed()
+    {
+        OnSpacePressed.Invoke();
     }
 }
